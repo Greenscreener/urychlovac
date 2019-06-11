@@ -17,10 +17,13 @@ void setup() {
   // put your setup code here, to run once:
   pinMode(7,OUTPUT);
   pinMode(8,OUTPUT);
+  pinMode(9,OUTPUT);
+  digitalWrite(9,HIGH);
   digitalWrite(8,HIGH);
   digitalWrite(7,HIGH);
   pinMode(2,INPUT_PULLUP);
   pinMode(3,INPUT_PULLUP);
+  pinMode(10,INPUT_PULLUP);
   //attachInterrupt(digitalPinToInterrupt(2), impuls1, FALLING);
   //attachInterrupt(digitalPinToInterrupt(3), impuls2, FALLING);
   Serial.begin(9600);
@@ -45,6 +48,8 @@ void loop() {
     impuls1();
   } else if (digitalRead(3)) {
     impuls2();
+  } else if (digitalRead(10)) {
+    impuls3();
   }
 }
 
@@ -58,12 +63,21 @@ void impuls1() {
 }
 
 void impuls2() {
-    previouscoil2trigger = lastcoil2trigger;
-    lastcoil2trigger = millis();
     delay(impulsDelay);
     digitalWrite(8, LOW);
     delay(impulsLenght);
     digitalWrite(8, HIGH);
+    Serial.println(millis());
+    delay(50);
+    previouscoil2trigger = lastcoil2trigger;
+    lastcoil2trigger = millis();
+}
+
+void impuls3() {
+    delay(impulsDelay);
+    digitalWrite(9, LOW);
+    delay(impulsLenght);
+    digitalWrite(9, HIGH);
     Serial.println(millis());
     delay(50);
 }
